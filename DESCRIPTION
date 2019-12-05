@@ -12,3 +12,4 @@ LazyData: true
 Imports: 
     ggraph,
     tidygraph
+RoxygenNote: 7.0.0

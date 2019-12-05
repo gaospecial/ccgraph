@@ -1,9 +1,7 @@
 #' Gather graph node from data.frame
 #'
-#' @param df
-#' @param index
+#' @inheritParams gather_graph
 #' @param value
-#' @param root
 #'
 #' @return a tibble
 #' @export

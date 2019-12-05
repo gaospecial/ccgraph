@@ -1,7 +1,7 @@
 #' calculate circle_circle layout manually
 #'
-#' @param layout
-#' @param index
+#' @inheritParams gather_graph
+#' @param layout a layout object
 #'
 #' @return
 #' @export

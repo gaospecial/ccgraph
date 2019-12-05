@@ -1,8 +1,8 @@
 #' Gather graph node from data.frame
 #'
-#' @param df
-#' @param index
-#' @param root
+#' @param df a data.frame
+#' @param index  grouping
+#' @param root root name
 #'
 #' @return a tibble
 #' @export
@@ -11,7 +11,9 @@
 #'  ibrary(ccgraph)
 #'  data(OTU)
 #'  edges <- gather_graph_edge(OTU,index = c("p","c","o"))
-#' @importFrom tidyr tidyr::unite
+#' @importFrom tidyr unite
+#'
+#' @name gather_graph
 gather_graph_edge <- function(df,index=NULL,root=NULL){
   require(dplyr)
   if (length(index) < 2){
