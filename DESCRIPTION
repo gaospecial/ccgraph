@@ -2,7 +2,7 @@ Package: ccgraph
 Type: Package
 Title: provide a circle-circle layout in graph
 Version: 0.1.0
-Author: Chun-Hui Gao
+Author: Chun-Hui Gao, Ying Ge
 Maintainer: Chun-Hui Gao <gaospecial@gmail.com>
 Description: Provide visualization of general tree-like datasets in circle-circle layout as a ggraph. 
   For example, country population in differnt continent, and species abundance in microbiome studies.
