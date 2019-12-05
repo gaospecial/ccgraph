@@ -1,3 +1,18 @@
+#' Gather graph node from data.frame
+#'
+#' @param df
+#' @param index
+#' @param value
+#'
+#' @return a tibble
+#' @export
+#'
+#' @examples
+#'  library(ccgraph)
+#'  data(OTU)
+#'  nodes <- gather_graph_node(OTU,index = c("p","c","o"))
+#' @import dplyr
+#' @importFrom tidyr unite
 gather_graph_node <- function(df,index=NULL,value=tail(colnames(df),1)){
   if (length(index) < 2){
     stop("please specify at least two index column(s)")
