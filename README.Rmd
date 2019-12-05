@@ -1,5 +1,18 @@
 ---
-output: github_document
+title: "小丫画图 ccgraph 首发礼"
+author: "高春辉"
+date: "`r Sys.Date()`"
+output:
+  github_document:
+    toc: yes
+  html_document: 
+    toc: yes
+    self_contained: True
+    toc_float: 
+      collapsed: false
+      smooth_scroll: false
+    theme: lumen
+    df_print: paged
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -9,15 +22,15 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "100%",
+  fig.width = 10,
+  fig.asp = 1
 )
 ```
 
 
-# ccgraph
+# `ccgraph`
 
-<!-- badges: start -->
-<!-- badges: end -->
 
 *严格意义上说，`ccgraph` 并不是一个真正意义上的 “包”。我们选择以 Package 的形式发布，是为了方便使用和传播。*
 
@@ -27,6 +40,12 @@ knitr::opts_chunk$set(
 
 “圆环套圆环”的说法来自于电影《无极》，以及搞笑片“一个馒头引发的血案”。没有看过的不妨去看看。
 
+## 安装
+
+既然是一个包，那么是需要安装才能使用的。我们提供了 `ccgraph.tar.gz` 文件，聪明如你，具体方法应该不用多说了。
+
+
+当然，也可以把包解压缩，把其中的两个函数定义（`R/gather_graph_node.R` 和 `R/gather_graph_edge.R` 导入当前环境，同样可以正常运行。这种情况不需要安装。
 
 ## 载入需要的包
 
@@ -35,6 +54,7 @@ knitr::opts_chunk$set(
 # load packages
 library(tidyverse)
 library(ggraph)
+library(ccgraph)
 ```
 
 
@@ -53,7 +73,7 @@ library(ggraph)
 
 ## 输入数据格式
 
-**FuncTree** 工具(https://bioviz.tokyo/functree)可以出类似这样的图，但是它的输入数据格式非常复杂（见下表）。需要针对每一个点做有针对性的设置。
+[**FuncTree**工具](https://bioviz.tokyo/functree) 可以出类似这样的图，但是它的输入数据格式非常复杂（见下表）。需要针对每一个点做有针对性的设置。
 
 |       Input	                 | Description                                 |
 |------------------------------|---------------------------------------------|
@@ -79,14 +99,7 @@ library(ggraph)
 library(treemap)
 data("GNI2014")
 
-library(gt)
-GNI2014 %>% arrange(desc(GNI)) %>% head(30) %>%
-  gt() %>% 
-  tab_header(title = "Gross national income and population totals",
-             subtitle = "(in 2014)") %>%
-  fmt_currency("GNI",decimals = 0) %>%
-  fmt_number("population",decimals = 0)
-  
+GNI2014 %>% arrange(desc(GNI)) %>% head(20) 
 ```
 
 另一个数据是随机生成的一个 OTU 表。
@@ -106,13 +119,13 @@ microbiome <- data.frame(
 
 这两个数据都可以使用 `treemap()` 来做一个可视化。
 
-```{r}
+```{r fig.width=6}
 treemap(GNI2014,index=c("continent","country"),vSize = "population")
 ```
 
 
 
-```{r}
+```{r fig.width=6}
 treemap(microbiome,index = c("phylum","class"),vSize = "value")
 
 ```
@@ -180,7 +193,7 @@ gc
 [搞大你的点](https://mp.weixin.qq.com/s/JNIncz3W-59yjGk2ibJWUw)
 
 ```{r}
-gc + scale_size(range = c(3,20))
+gc + scale_size(range = c(3,40))
 ```
 
 ## 添加注释文字
@@ -188,7 +201,7 @@ gc + scale_size(range = c(3,20))
 ### 外环文字
 
 ```{r}
-gc + scale_size(range = c(0.5,20)) +
+gc + scale_size(range = c(0.5,80)) +
       geom_node_text(
       aes(
         x = 1.0175 * x,
@@ -198,14 +211,14 @@ gc + scale_size(range = c(0.5,20)) +
         filter = leaf,
         color = node.branch
       ),
-      size = 1, hjust = 'outward'
+      size = 6, hjust = 'outward'
     )
 ```
 
 ### 内环文字
 
 ```{r}
-gc + scale_size(range = c(0.5,20)) +
+gc1 <- gc + scale_size(range = c(0.5,80)) +
     geom_node_text(
     aes(
       x = 1.0175 * x,
@@ -215,17 +228,42 @@ gc + scale_size(range = c(0.5,20)) +
       filter = leaf,
       color = node.branch
     ), 
-    size = 1, hjust = 'outward'
+    size = 3, hjust = 'outward'
     ) +
   geom_node_text(
     aes(label=node.short_name,
         filter = !leaf,
         color = node.branch),
     fontface="bold",
-    size=3,
+    size=6,
     family="sans"
   )
 ```
+
+标签文字出界了，导致显示不完全。扩大坐标轴可以解决这个问题。
+
+**注**：图的坐标系是不显示的，其实是 [-1,1] 的区间。
+
+```{r}
+gc1 + theme_bw() + theme(legend.position = "none")
+```
+
+要扩大坐标系，使用下面的命令即可。然后使用 `ggsave()` 保存。
+
+```{r}
+gc1 + coord_cartesian(xlim=c(-1.3,1.3),ylim = c(-1.3,1.3))
+ggsave("country.png",width = 10,height = 10)
+```
+
+如果需要矢量图，则可以使用 `export` 包（参见 [这里](https://mp.weixin.qq.com/s/nHT3vkwNfQknr6CLF0cUDQ)）。
+
+```{r}
+library(export)
+
+graph2ppt(gc1, file="country.pptx")
+```
+
+`PPT` 格式与 `png` 会有些差异，但都是可以编辑的（当然可以调整参数后再输出）。可以很方便的把不需要的节点和边删掉。
 
 类似的，我们也可以对随机生成的 OTU table 做一个可视化。
 
