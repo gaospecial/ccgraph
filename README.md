@@ -377,15 +377,15 @@ attributes(gm)
 
 ``` r
 head(gm$data,10)
-#>             x             y  leaf         node.name  node.size node.level node.count node.short_name
-#> 1  0.00000000  0.0000000000 FALSE               Bac 501473.086       <NA>          1             Bac
-#> 2  0.28879923 -0.1664515386 FALSE          phylum_1  96267.932     phylum        191        phylum_1
-#> 3 -0.05023042 -0.3295269579 FALSE          phylum_2  91926.615     phylum        196        phylum_2
-#> 4 -0.32986834 -0.0479373607 FALSE          phylum_3 103372.673     phylum        207        phylum_3
-#> 5 -0.13477663  0.3048710746 FALSE          phylum_4 109462.019     phylum        214        phylum_4
-#> 6  0.25567075  0.2138774908 FALSE          phylum_5 100443.847     phylum        192        phylum_5
-#> 7  0.66553899  0.0387594830 FALSE phylum_1/class_10   5034.082      class         11        class_10
-#> 8  0.66666648  0.0004967102 FALSE phylum_1/class_11   3930.509      class          8        class_11
+#>              x           y  leaf         node.name  node.size node.level node.count node.short_name
+#> 1  0.000000000  0.00000000 FALSE               Bac 510239.888       <NA>          1             Bac
+#> 2 -0.001511976  0.33332990 FALSE          phylum_1 102783.328     phylum        205        phylum_1
+#> 3  0.321605945  0.08763976 FALSE          phylum_2 107880.003     phylum        214        phylum_2
+#> 4  0.179144339 -0.28110215 FALSE          phylum_3  99885.814     phylum        198        phylum_3
+#> 5 -0.219205208 -0.25111788 FALSE          phylum_4 108009.884     phylum        207        phylum_4
+#> 6 -0.312468719  0.11607933 FALSE          phylum_5  91680.860     phylum        176        phylum_5
+#> 7 -0.394485405  0.53742507 FALSE phylum_1/class_10   4568.645      class          6        class_10
+#> 8 -0.375637620  0.55076385 FALSE phylum_1/class_11   2885.211      class          6        class_11
 #>   node.branch .ggraph.orig_index circular .ggraph.index
 #> 1        <NA>                  1     TRUE             1
 #> 2    phylum_1                  2     TRUE             2
