@@ -13,7 +13,7 @@ ccgraph <- function(layout,index){
         filter = (node.level == index[[length(index)]]),
         color = node.branch
       ),
-      size = 1, hjust = 'outward', family = 'sans'
+      size = 1, hjust = 'outward'
     ) +
     geom_node_text(
       aes(
@@ -22,8 +22,10 @@ ccgraph <- function(layout,index){
         label = node.short_name,
         filter = (node.level == index[[1]])
       ),
-      size = 4, hjust = 0.5,  fontface="bold",family = 'sans'
+      size = 4, hjust = 0.5,  fontface="bold"
     ) +
     scale_size_area(max_size = 50) +
-    coord_cartesian(xlim=xylim,ylim = xylim)
+    theme_void() +
+    theme(legend.position = "none") +
+    coord_equal()
 }
