@@ -38,10 +38,10 @@ gather_graph_node <- function(df,index=NULL,value=tail(colnames(df),1),root=NULL
                               node.level=root,
                               node.count=1,
                               node.short_name=root,
-                              node.branch=NA,
+                              node.branch=root,
                               stringsAsFactors = F)
       data <- rbind(root_data,data)
-      data$node.level <- factor(data$node.level, levels = c(value,index))
+      data$node.level <- factor(data$node.level, levels = c(root,index))
       return(data)
     }
   }
